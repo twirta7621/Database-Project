@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <head>
+        <title>Welcome!</title>
+    </head>
+    <style>
+        /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
+        .flip-card {
+                    background-color: transparent;
+                  width: 300px;
+              height: 200px;
+             border: 1px solid #f1f1f1;
+              perspective: 1000px; /* Remove this if you don't want the 3D effect */
+            }
+
+/* This container is needed to position the front and back side */
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+/* Position the front and back side */
+        .flip-card-front, .flip-card-back {
+             position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+        }
+
+/* Style the front side (fallback if image is missing) */
+        .flip-card-front {
+             background-color: #bbb;
+            color: black;
+        }
+
+/* Style the back side */
+        .flip-card-back {
+            background-color: dodgerblue;
+            color: white;
+            transform: rotateY(180deg);
+        }
+    
+        body{
+            background-image: radial-gradient(purple,magenta,magenta, blue, dodgerblue);
+        }
+        .cdnjs{
+            width: 300px;
+            height: 600px;
+            padding: 10px;
+            margin: 10px;
+            display: inline-block;
+        }
+
+        h1{
+            font-family: "Comic Sans MS", cursive, sans-serif;
+        }
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 10px;
+        } 
+
+        li a {
+            display: block;
+        }
+    
+    </style>
+
+<script type="text/template" id="temp">
+    <div class = 'cdnjs' id = 'big'>
+        
+        <h1 id = 'title'>{{Name}}</h1>
+        
+        <!--flip card-->            
+
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <img src = '{{Poster}}' width="300" height = "500">
+                </div>
+                <div class="flip-card-back">
+                    <iframe width="300" height="200" src="{{Trailer}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+        
+
+    </script>
+
+    <script>
+       var data,build;
+       var search;
+       function loadJSON(){        
+    $.get("http://localhost:8500/json", function(result){       
+        data = JSON.parse(result);
+        movies(data);
+    }); 
+}
+    function movies(data){
+         build = "";
+         search = document.getElementById('search').value;
+        var temp = document.getElementById("temp").innerHTML;
+        var output = document.getElementById("op");
+        for(var i=0; i<data.length; i++){        
+            if(data[i].Name.toLowerCase().indexOf(search.toLowerCase() ) != -1){
+                build += Mustache.render(temp, data[i]);
+            }        
+        }
+        output.innerHTML = build; 
+    }
+
+    </script>
+
+    <body id="myPage" onload="loadJSON()">
+        <input type = 'text' id = 'search' placeholder="Search by Title"></input>
+        <button id = "but" onclick = "loadJSON()">Search by Title</button>
+        <div id="op"></div>
+
+        <ul>
+            <li><a href="http://localhost:8500/home">Back to home</a></li>
+            <li><a href="http://localhost:8500/search">Back to Search</a></li>
+        </ul>
+
+</html>

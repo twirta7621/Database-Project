@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <head>
+        <title>Welcome!</title>
+    </head>
+    <style>
+/*
+        .flip-card {
+                    background-color: transparent;
+                  width: 300px;
+              height: 200px;
+             border: 1px solid #f1f1f1;
+              perspective: 1000px;
+            }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+             position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+        }
+
+        .flip-card-front {
+             background-color: #bbb;
+            color: black;
+        }
+
+        .flip-card-back {
+            background-color: dodgerblue;
+            color: white;
+            transform: rotateY(180deg);
+        }
+    */
+        body{
+            background-image: radial-gradient(45deg, purple,magenta,magenta, blue, dodgerblue);
+        }
+        .cdnjs{
+            width: 300px;
+            height: 600px;
+            padding: 10px;
+            margin: 10px;
+            display: inline-block;
+        }
+
+        h1{
+            font-family: "Comic Sans MS", cursive, sans-serif;
+        }
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 10px;
+        } 
+
+        li a {
+            display: block;
+        }
+    
+        
+    
+    </style>
+
+    <script type="text/template" id="temp">
+        
+
+    </script>
+<!--
+    <script>
+       var data,build;
+        function loadJSON(){        
+    $.get("http://localhost:8500/json", function(result){       
+        data = JSON.parse(result);
+        movies(data);
+    }); 
+}
+    function movies(data){
+         build = "";
+        var temp = document.getElementById("temp").innerHTML;
+        var output = document.getElementById("op");
+        for(var i=0; i<data.length; i++){        
+
+                build += Mustache.render(temp, data[i]);
+                
+        }
+        output.innerHTML = build; 
+    }
+
+    </script>
+-->
+    <body>
+        <div id = "search">
+                <select onChange="window.location.href=this.value">
+                        <option value="http://localhost:8500/search">Search By.....</option>
+                        <option value="http://localhost:8500/title">Title</option>
+                        <option value="http://localhost:8500/cast">Cast</option>
+                        <option value="http://localhost:8500/dir">Director</option>
+                        <option value="http://localhost:8500/g">Genre</option>
+                </select>
+        </div>
+         
+        <div id="op"></div>
+
+        <ul>
+            <li><a href="http://localhost:8500/home">Home</a></li>
+            
+        </ul>
+
+    </body>
+
+</html>
